@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from account.models import User
+from account.models import Account
 
 # 年
 class Year(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     span = models.IntegerField(default=12)
     start_date = models.DateTimeField()

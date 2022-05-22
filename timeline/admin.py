@@ -1,3 +1,8 @@
+from calendar import week
 from django.contrib import admin
+from .models import Year, Month, Week, Event
 
-# Register your models here.
+admin.site.register(Year)
+admin.site.register(Month)
+admin.site.register(Week)
+admin.site.register(Event)
