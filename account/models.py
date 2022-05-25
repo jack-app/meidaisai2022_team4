@@ -8,5 +8,8 @@ class Account(models.Model):
     # ユーザー認証のインスタンス(1vs1関係)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    # 追加フィールド
+    display_name = models.CharField(max_length=100)
+
     def __str__(self):
         return self.user.username
