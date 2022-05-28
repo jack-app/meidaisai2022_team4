@@ -13,6 +13,9 @@
 
  {% if AccountCreate %}
    <h1>登録完了!</h1>
+   <p class="message"> ログインは
+    <a href="{% url 'Login' %}">こちら</a>
+   </p>
 
  {% else %}
    <div class="reg">
