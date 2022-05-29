@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from .settings_local import *
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,15 +20,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 # static(CSS)
 STATIC_DIR = os.path.join(BASE_DIR,"static")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1']
-
+#DEBUG -> settings_local.py
+#ALLOWED_HOSTS -> settings_local.py
 
 # Application definition
 
@@ -76,15 +68,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES -> settings_local.py
 
 
 # Password validation
@@ -140,3 +124,34 @@ STATICFILES_DIRS = [STATIC_DIR,]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEBUG = False
+
+try:
+    # 存在する場合、ローカルの設定読み込み
+    from .settings_local import (
+        DEBUG,
+        SECRET_KEY,
+        DATABASES,
+        ALLOWED_HOSTS
+        ) 
+except ImportError:
+    pass
+
+if not DEBUG:
+    # 本番環境の設定
+    # Heroku settings
+
+    # staticの設定
+    import django_heroku
+
+    # Static files (CSS, JavaScript, Images)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MIDDLEWARE += [
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+    ]
+
+    # HerokuのConfigを読み込み
+    django_heroku.settings(locals())
+
