@@ -1,0 +1,1 @@
+web: gunicorn meidaisai2022_team4.wsgi --log-file -
