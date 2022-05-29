@@ -20,17 +20,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 # static(CSS)
 STATIC_DIR = os.path.join(BASE_DIR,"static")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!6t)9zkc9g6n62d2$b$rg&o#yah#971sf(@^3rrjdm&*89ih*y'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1']
-
+#DEBUG -> settings_local.py
+#ALLOWED_HOSTS -> settings_local.py
 
 # Application definition
 
@@ -77,26 +68,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES -> settings_local.py
 
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-# PASSWORD_HASHERS = [
-#     "django.contrib.auth.hashers.Argon2PasswordHasher",
-#     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
-#     "django.contrib.auth.hashers.BCryptPasswordHasher",
-#     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-#     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-# ]
+# https://docs.djangoproject.com/en/3.2/ref/settings/auth-password-validators
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.BCryptPasswordHasher",
+]
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -141,3 +124,34 @@ STATICFILES_DIRS = [STATIC_DIR,]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEBUG = False
+
+try:
+    # 存在する場合、ローカルの設定読み込み
+    from .settings_local import (
+        DEBUG,
+        SECRET_KEY,
+        DATABASES,
+        ALLOWED_HOSTS
+        ) 
+except ImportError:
+    pass
+
+if not DEBUG:
+    # 本番環境の設定
+    # Heroku settings
+
+    # staticの設定
+    import django_heroku
+
+    # Static files (CSS, JavaScript, Images)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MIDDLEWARE += [
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+    ]
+
+    # HerokuのConfigを読み込み
+    django_heroku.settings(locals())
+
