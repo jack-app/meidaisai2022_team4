@@ -139,11 +139,16 @@ except ImportError:
     pass
 
 if not DEBUG:
+    import django_heroku
+    import json
+
     # 本番環境の設定
     # Heroku settings
+    SECRET_KEY = os.environ['SECRET_KEY']
+    DATABASES = json.loads(os.environ['DATABASES'])
+    ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
 
     # staticの設定
-    import django_heroku
 
     # Static files (CSS, JavaScript, Images)
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
