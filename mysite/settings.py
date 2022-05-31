@@ -144,7 +144,6 @@ if not DEBUG:
 
     # 本番環境の設定
     # Heroku settings
-    DEBUG = True
     SECRET_KEY = os.environ['SECRET_KEY']
     DATABASES = json.loads(os.environ['DATABASES'])
     ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
