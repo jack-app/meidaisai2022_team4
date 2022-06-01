@@ -10,20 +10,23 @@
 <body>
 <h1>ログイン画面</h1>
 
+
 <div class="reg">
   <form method="post" action="{% url 'Login' %}">
     {% csrf_token %}
 
+    
     <table class="reg_form">
-    <tr>
-    <td><label for="userid">ユーザーID:</label></td>
-    <td><input type="text" name="userid"></td>
-    <td><label for="password">パスワード：</label></td>
-    <td><input type="password" name="password"></td>
-    </tr>
+      <div class="error_message">{{ error_message }}</div>
+      <tr>
+      <td><label for="userid">ユーザーID:</label></td>
+      <td><input type="text" name="userid"></td>
+      <td><label for="password">パスワード：</label></td>
+      <td><input type="password" name="password"></td>
+      </tr>
     </table>
 
-    <input type="submit" class="btn" value="Login">
+    <input type="submit" class="btn" value="ログイン">
  </form>
 </div>
    <p class="message">アカウントをお持ちですか？：

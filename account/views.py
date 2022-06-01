@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 #ログイン
 def Login(request):
     # POST
+    
     if request.method == 'POST':
         # フォーム入力のユーザーID・パスワード取得
         ID = request.POST.get('userid')
@@ -19,6 +20,7 @@ def Login(request):
 
         # Djangoの認証機能
         user = authenticate(username=ID, password=Pass)
+
 
         # ユーザー認証
         if user:
@@ -30,13 +32,13 @@ def Login(request):
                 return HttpResponseRedirect(reverse('home'))
             else:
                 # アカウント利用不可
-                return HttpResponse("アカウントが有効ではありません")
+                return render(request, 'account/login.html', context={"error_message": "アカウントが有効ではありません"})
         # ユーザー認証失敗
         else:
-            return HttpResponse("ログインIDまたはパスワードが間違っています")
+            return render(request, 'account/login.html', context={"error_message": "ログインIDまたはパスワードが間違っています"})
     # GET
     else:
-        return render(request, 'account/login.html')
+        return render(request, 'account/login.html', )
 
 
 #ログアウト
