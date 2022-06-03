@@ -71,8 +71,10 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #DATABASES -> settings_local.py
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/auth-password-validators
+
+#Password validation
+#https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",

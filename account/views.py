@@ -1,9 +1,80 @@
+from calendar import month
 from django.shortcuts import render
 from django.views.generic import TemplateView # テンプレートタグ
 from .forms import AccountForm, AddAccountForm # ユーザーアカウントフォーム
-from django.contrib.auth import authenticate
+from .models import Account # ユーザーアカウントデータベース
+
+# ログイン・ログアウト処理に利用
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
+from timeline.views import get_years, get_months, get_weeks, get_events
+
+#ログイン
+def Login(request):
+    # POST
+    
+    if request.method == 'POST':
+        # フォーム入力のユーザーID・パスワード取得
+        ID = request.POST.get('userid')
+        Pass = request.POST.get('password')
+
+        # Djangoの認証機能
+        user = authenticate(username=ID, password=Pass)
+
+
+        # ユーザー認証
+        if user:
+            #ユーザーアクティベート判定
+            if user.is_active:
+                # ログイン
+                login(request,user)
+                # ホームページ遷移
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                # アカウント利用不可
+                return render(request, 'account/login.html', context={"error_message": "アカウントが有効ではありません"})
+        # ユーザー認証失敗
+        else:
+            return render(request, 'account/login.html', context={"error_message": "ログインIDまたはパスワードが間違っています"})
+    # GET
+    else:
+        return render(request, 'account/login.html', )
+
+
+#ログアウト
+@login_required
+def Logout(request):
+    logout(request)
+    # ログイン画面遷移
+    return HttpResponseRedirect(reverse('Login'))
+
+
+#ホーム
+@login_required
+def home(request):
+    userid = request.user
+    cur_user = Account.objects.get(user_id=userid)
+
+    # ユーザごとに情報を取得
+    year_list = get_years(cur_user)
+    month_list = get_months(year_list)
+    week_list = get_weeks(month_list)
+    event_list = get_events(week_list)
+
+    params = {"UserID":userid, 
+              "display_name":cur_user.display_name, 
+              "year_list": year_list, 
+              "month_list": month_list,
+              "week_list": week_list,
+              "event_list": event_list}
+
+    return render(request, "account/home.html",context=params)
+
+
+
 
 class  AccountRegistration(TemplateView):
 
