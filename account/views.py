@@ -1,3 +1,4 @@
+from calendar import month
 from django.shortcuts import render
 from django.views.generic import TemplateView # テンプレートタグ
 from .forms import AccountForm, AddAccountForm # ユーザーアカウントフォーム
@@ -8,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+
+from timeline.views import get_years, get_months, get_weeks, get_events
 
 #ログイン
 def Login(request):
@@ -55,7 +58,19 @@ def home(request):
     userid = request.user
     cur_user = Account.objects.get(user_id=userid)
 
-    params = {"UserID":request.user, "display_name":cur_user.display_name, }
+    # ユーザごとに情報を取得
+    year_list = get_years(cur_user)
+    month_list = get_months(year_list)
+    week_list = get_weeks(month_list)
+    event_list = get_events(week_list)
+
+    params = {"UserID":userid, 
+              "display_name":cur_user.display_name, 
+              "year_list": year_list, 
+              "month_list": month_list,
+              "week_list": week_list,
+              "event_list": event_list}
+
     return render(request, "account/home.html",context=params)
 
 

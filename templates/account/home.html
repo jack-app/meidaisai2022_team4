@@ -10,6 +10,31 @@
 <body>
  <h1><font color="red">{{ display_name }}</font>さんようこそ！！</h1>
 
+ <div>
+    {% for year in year_list %}
+    {{ year }}　
+    {% endfor %}
+ </div>
+
+ <div>
+    {% for month in month_list %}
+        {{ month }}　
+    {% endfor %}
+ </div>
+
+ <div>
+    {% for week in week_list %}
+        {{ week }}　
+    {% endfor %}
+ </div>
+
+<div>
+    {% for event in event_list %}
+        {{ event }}　
+    {% endfor %}
+</div>
+
+
  <p class="message"> ログアウトは
  <a href="{% url 'Logout' %}">こちら</a>
  </p>
