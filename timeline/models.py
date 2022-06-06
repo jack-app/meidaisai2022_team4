@@ -39,9 +39,9 @@ class Week(models.Model):
 # イベント
 class Event(models.Model):
     week_id = models.ForeignKey(Week, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    detail = models.TextField()
-    date = models.DateTimeField(default=timezone.now())
+    name = models.CharField(max_length=200, help_text="名前")
+    detail = models.TextField(help_text="詳細")
+    date = models.DateTimeField(default=timezone.now(), help_text="日付")
     published_date = models.DateTimeField(auto_now=True, null=False)
 
     def __str__(self):
