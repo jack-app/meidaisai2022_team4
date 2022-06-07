@@ -59,3 +59,14 @@ $(function(){
         }
     
     } ) ;
+
+
+// カレンダー入力用
+// https://blog.narito.ninja/detail/83/#jquery-ui-datepicker
+$(function () {
+    // 日付は、年-月-日 の形式でお願いする。
+    let dateFormat = 'yy-mm-dd';
+    $('#id_date').datepicker({
+        dateFormat: dateFormat
+    });
+});
