@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+
+        <!-- for admin widgets -->
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+    
+        <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+        {{ form.media }}
+        <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+        <!-- end for admin widgets -->
+
+        <link rel="stylesheet" href='{% static "account/css/style.css" %}' />
+        <link rel="stylesheet" href='{% static "timeline/css/form.css" %}' />
+        <link rel="stylesheet" href="{% static 'timeline/css/detail.css' %}"/>
+    </head>
+    <body>
+        <h1><font color="red">{{ display_name }}</font>さんようこそ！！</h1>
+
+        <!-- <div>
+            {% for year in year_list %}
+            {{ year }}　
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for month in month_list %}
+                {{ month }}　
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for week in week_list %}
+                {{ week }}　
+            {% endfor %}
+        </div> -->
+
+        <div>
+            {% for event in event_list %}
+                <div>
+                    <p>
+                        {{ event.date }}
+                        <a id="detail-open-{{ event.pk }}" name="{{ event.pk }}" class="button-link">
+                        {{ event.name }}
+                        </a>
+                    </p>
+                    <div id="detail-content-{{ event.pk }}">
+                        <p>{{event.date}}</p>
+                        <p>{{event.name}}</p>
+                        <p>{{event.detail}}</p>
+                        <form method="post" action="{% url 'delete' event.pk %}">{% csrf_token %}
+                            <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
+                        </form>
+                        <p><a id="detail-close-{{ forloop.counter }}" class="button-link">閉じる</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <p><a id="event-form-open" class="button-link">イベントを追加する</a></p>
+
+        <div id="event-form-content">
+            <p>名前、詳細、日付を入力してください。</p>
+            <form action="{% url 'home' %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">送信</button>
+            </form>
+            <p><a id="event-form-close" class="button-link">閉じる</a></p>
+        </div>
+
+
+        <p class="message"> ログアウトは
+            <a href="{% url 'Logout' %}">こちら</a>
+        </p>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src='{% static "timeline/js/form.js" %}'></script>
+        <script src='{% static "timeline/js/detail.js" %}'></script>
+    </body>
+</html>

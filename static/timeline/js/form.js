@@ -1,7 +1,10 @@
+// 参考
+// https://syncer.jp/jquery-modal-window
+
 $(function(){
 
     //モーダルウィンドウを出現させるクリックイベント
-    $("#modal-open").click( function(){
+    $("#event-form-open").click( function(){
     
         //キーボード操作などにより、オーバーレイが多重起動するのを防止する
         $( this ).blur() ;	//ボタンからフォーカスを外す
@@ -16,13 +19,13 @@ $(function(){
         centeringModalSyncer() ;
     
         //コンテンツをフェードインする
-        $( "#modal-content" ).fadeIn( "slow" ) ;
+        $( "#event-form-content" ).fadeIn( "slow" ) ;
     
         //[#modal-overlay]、または[#modal-close]をクリックしたら…
-        $( "#modal-overlay,#modal-close" ).unbind().click( function(){
+        $( "#modal-overlay,#event-form-close" ).unbind().click( function(){
     
             //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-            $( "#modal-content,#modal-overlay" ).fadeOut( "slow" , function(){
+            $( "#event-form-content,#modal-overlay" ).fadeOut( "slow" , function(){
     
                 //[#modal-overlay]を削除する
                 $('#modal-overlay').remove() ;
@@ -47,11 +50,11 @@ $(function(){
             // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
     //		var cw = $( "#modal-content" ).outerWidth( {margin:true} );
     //		var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-            var cw = $( "#modal-content" ).outerWidth();
-            var ch = $( "#modal-content" ).outerHeight();
+            var cw = $( "#event-form-content" ).outerWidth();
+            var ch = $( "#event-form-content" ).outerHeight();
     
             //センタリングを実行する
-            $( "#modal-content" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+            $( "#event-form-content" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
     
         }
     

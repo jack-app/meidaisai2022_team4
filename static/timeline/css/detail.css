@@ -1,5 +1,5 @@
-/* モーダル */
-#modal-content{
+/* 詳細モーダルのCSS */
+div[id^="detail-content"] {
 	width:50%;
 	margin:1.5em auto 0;
 	padding:10px 20px;
@@ -10,25 +10,16 @@
     position:fixed;
 }
 
-.modal-p{
+/* .modal-p{
 	margin-top:1em;
 }
 
 .modal-p:first-child{
 	margin-top:0;
-}
+} */
 
-.button-link{
-	color:#00f;
-	text-decoration:underline;
-}
- 
-.button-link:hover{
-	cursor:pointer;
-	color:#f00;
-}
 
-#modal-overlay{
+#detail-overlay{
 	z-index:1;
 	display:none;
 	position:fixed;

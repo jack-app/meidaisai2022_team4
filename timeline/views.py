@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from .models import Year, Month, Week, Event
+from .forms import EventPostForm
+
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from account.models import Account # ユーザーアカウントデータベース
 # Create your views here.
 
 # 年を取得
@@ -22,10 +28,50 @@ def get_weeks(MonthList):
     return week_list
 
 # イベントを取得
-def get_events(WeekList):
-    event_list = []
-    for week in WeekList:
-        event_list += Event.objects.filter(week_id = week)
+def get_events(UserID):
+    event_list = Event.objects.filter(user_id = UserID)
     return event_list
 
+
+
+def user_params(cur_user, userid):
+    # ユーザごとに情報を取得
+    year_list = get_years(cur_user)
+    month_list = get_months(year_list)
+    week_list = get_weeks(month_list)
+    event_list = get_events(cur_user)
+
+    params = {"UserID":userid, 
+              "display_name":cur_user.display_name, 
+              "year_list": year_list, 
+              "month_list": month_list,
+              "week_list": week_list,
+              "event_list": event_list,
+              "form": EventPostForm(),}
+    return params
+
+#ホーム
+@login_required
+def home(request):
+
+    # アクセスしたユーザの情報を取得
+    userid = request.user
+    cur_user = Account.objects.get(user_id=userid)
+
+    if request.method == 'POST':
+        form = EventPostForm(request.POST)
+        tag = form.save(commit=False)
+        tag.user_id = cur_user
+        tag.save()
+            # return HttpResponse(f'{post.id}', status=200)
+
+    # ユーザに応じてDBから表示する情報を取得
+    params = user_params(cur_user, userid)
+    return render(request, "timeline/home.html",context=params)
+
+@require_POST
+def delete_event(request, event_id):
+    memo = get_object_or_404(Event, id=event_id)
+    memo.delete()
+    return redirect('home')
 
