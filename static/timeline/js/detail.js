@@ -2,12 +2,13 @@
 // https://syncer.jp/jquery-modal-window
 // https://aya404.com/blog/develop/167_a-href-jquery/
 
+var event_num;
 
 $(function(){
     $('[id^="detail-open"]').click( function(e){
         e.preventDefault();
         // クリックしたイベントの番号を取得
-        const event_num = $(this).attr('name');
+        event_num = $(this).attr('name');
 
        //キーボード操作などにより、オーバーレイが多重起動するのを防止する
        $( this ).blur() ;	//ボタンからフォーカスを外す
@@ -24,7 +25,7 @@ $(function(){
        $( "#detail-content-"+event_num ).fadeIn( "slow" ) ;
    
        //[#modal-overlay]、または[#detail-close]をクリックしたら…
-       $( "#modal-overlay,#detail-close-"+event_num ).unbind().click( function(){
+       $( "#modal-overlay" ).unbind().click( function(){
    
            //[#detail-content]と[#modal-overlay]をフェードアウトした後に…
            $( "#detail-content-"+event_num ).fadeOut("slow");
@@ -36,6 +37,19 @@ $(function(){
            } ) ;
    
        } ) ;
+
+       $(  "#detail-close-"+event_num ).unbind().click( function(){
+   
+        //[#detail-content]と[#modal-overlay]をフェードアウトした後に…
+        $( "#detail-content-"+event_num ).fadeOut("slow");
+        $( "#modal-overlay" ).fadeOut( "slow" , function(){
+
+            //[#modal-overlay]を削除する
+            $('#modal-overlay').remove() ;
+
+        } ) ;
+
+    } ) ;
    
    } ) ;
    
@@ -43,7 +57,7 @@ $(function(){
    $( window ).resize( centeringDetailSyncer ) ;
    
        //センタリングを実行する関数
-       function centeringDetailSyncer(event_num) {
+       function centeringDetailSyncer() {
    
            //画面(ウィンドウ)の幅、高さを取得
            var w = $( window ).width() ;

@@ -31,7 +31,7 @@
                         <form method="post" action="{% url 'delete' event.pk %}">{% csrf_token %}
                             <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
                         </form>
-                        <p><a id="detail-close-{{ forloop.counter }}" class="button-link">閉じる</a></p>
+                        <p><a id="detail-close-{{ event.pk }}" class="button-link">閉じる</a></p>
                     </div>
                 </div>
             {% endfor %}
@@ -44,6 +44,7 @@
             <form action="{% url 'home' %}" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
+                <input type="hidden" name="submit_token" value="{{ submit_token }}" />
                 <button type="submit">送信</button>
             </form>
             <p><a id="event-form-close" class="button-link">閉じる</a></p>
