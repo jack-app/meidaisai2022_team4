@@ -1,0 +1,26 @@
+.event-pannel{
+    background-color: #dfc39d;
+    display: inline-block;
+    height: 100pt;
+    width: 100pt;
+    box-shadow: 5px -5px 5px 0px #00000011;
+    overflow-: hidden;
+}
+
+.day-pannel{
+    background-color: #3CBCC7;
+    display: inline-block;
+    box-shadow: 5px -5px 5px 0px #00000011;
+}
+
+.month-pannel{
+    background-color: #1C96BA;
+    display: inline-block;
+    box-shadow: 5px -5px 5px 0px #00000011;
+}
+
+.year-pannel{
+    background-color: #0C73B2;
+    display: inline-block;
+    box-shadow: 5px -5px 5px 0px #00000011;
+}

@@ -9,6 +9,7 @@ $(function(){
         e.preventDefault();
         // クリックしたイベントの番号を取得
         event_num = $(this).attr('name');
+        console.log(event_num)
 
        //キーボード操作などにより、オーバーレイが多重起動するのを防止する
        $( this ).blur() ;	//ボタンからフォーカスを外す

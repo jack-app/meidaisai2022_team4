@@ -1,5 +1,5 @@
 import uuid
-from datetime import date
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Year, Month, Week, Event
@@ -32,8 +32,35 @@ def get_weeks(MonthList):
 # イベントを取得
 def get_events(UserID):
     # ユーザごとのイベントを日付順で取得
-    event_list = Event.objects.filter(user_id = UserID).order_by("-date")
-    return event_list
+    event_list = Event.objects.filter(user_id = UserID).order_by("date")
+    event_vector = []
+    event_len = len(event_list)
+    i = 0
+    j = 0
+    k = 1
+    l = 1
+    while(i < event_len):
+        year = event_list[i].date.year
+        event_vector.append([])
+        event_vector[j].append(year)
+        while(i < event_len and year == event_list[i].date.year):
+            month = event_list[i].date.month
+            event_vector[j].append([])
+            event_vector[j][k].append(month)
+            while(i < event_len and month == event_list[i].date.month):
+                day = event_list[i].date.day
+                event_vector[j][k].append([])
+                event_vector[j][k][l].append(day)
+                while(i < event_len and day == event_list[i].date.day):
+                    event_vector[j][k][l].append(event_list[i])
+                    i += 1
+                l += 1
+            k += 1
+            l = 1
+        j += 1
+        k = 1
+        l  = 1
+    return event_vector
 
 def set_submit_token(request):
     submit_token = str(uuid.uuid4())
@@ -53,18 +80,18 @@ def exists_submit_token(request):
 
 def user_params(cur_user, userid, request):
     # ユーザごとに情報を取得
-    year_list = get_years(cur_user)
-    month_list = get_months(year_list)
-    week_list = get_weeks(month_list)
+    # year_list = get_years(cur_user)
+    # month_list = get_months(year_list)
+    # week_list = get_weeks(month_list)
     event_list = get_events(cur_user)
 
 
 
     params = {"UserID":userid, 
               "display_name":cur_user.display_name, 
-              "year_list": year_list, 
-              "month_list": month_list,
-              "week_list": week_list,
+            #   "year_list": year_list, 
+            #   "month_list": month_list,
+            #   "week_list": week_list,
               "event_list": event_list,
               "form": EventPostForm(),
                }
