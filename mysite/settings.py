@@ -77,16 +77,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+#DATABASES -> settings_local.py
 
 #Password validation
 #https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -141,3 +132,38 @@ STATICFILES_DIRS = [STATIC_DIR,]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEBUG = False
+
+try:
+    # 存在する場合、ローカルの設定読み込み
+    from .settings_local import (
+        DEBUG,
+        SECRET_KEY,
+        DATABASES,
+        ALLOWED_HOSTS
+        ) 
+except ImportError:
+    pass
+
+if not DEBUG:
+    import django_heroku
+    import json
+
+    # 本番環境の設定
+    # Heroku settings
+    SECRET_KEY = os.environ['SECRET_KEY']
+    DATABASES = json.loads(os.environ['DATABASES'])
+    ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
+
+    # staticの設定
+
+    # Static files (CSS, JavaScript, Images)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    MIDDLEWARE += [
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+    ]
+
+    # HerokuのConfigを読み込み
+    django_heroku.settings(locals())
