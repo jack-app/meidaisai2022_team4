@@ -1,8 +1,8 @@
 from calendar import month
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView # テンプレートタグ
 from .forms import AccountForm, AddAccountForm # ユーザーアカウントフォーム
-
+from timeline.models import Event # イベントフォーム
 
 # ログイン・ログアウト処理に利用
 from django.contrib.auth import authenticate, login, logout
@@ -87,18 +87,39 @@ class  AccountRegistration(TemplateView):
             # AccountForm & AddAccountForm 1vs1 紐付け
             add_account.user = account
 
-            # 画像アップロード有無検証
-            if 'account_image' in request.FILES:
-                add_account.account_image = request.FILES['account_image']
-
             # モデル保存
             add_account.save()
+
+            Event.objects.create(
+                user_id = add_account,
+                name = "新規登録",
+                detail = "最初のイベント",
+            )
 
             # アカウント作成情報更新
             self.params["AccountCreate"] = True
 
+            # フォーム入力のユーザーID・パスワード取得
+            ID = request.POST.get('username')
+            Pass = request.POST.get('password')
+
+            # Djangoの認証機能
+            user = authenticate(username=ID, password=Pass)
+
+
+            # ユーザー認証
+            if user:
+                #ユーザーアクティベート判定
+                if user.is_active:
+                    # ログイン
+                    login(request,user)
+                    # ホームページ遷移
+                    return redirect('home')
+            # GET
+            else:
+                return redirect('Login')
+
         else:
             # フォームが有効でない場合
             print(self.params["account_form"].errors)
-
-        return render(request,"account/register.html",context=self.params)
+            return render(request,"account/register.html",context=self.params)

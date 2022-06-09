@@ -1,26 +1,87 @@
+.btn-delete{
+    font-family: 'RocknRoll One', sans-serif;
+    color: #fff;
+    background-color: #00cccc;
+    font-size: 17px;
+    padding: 10px 20px;
+    margin-left: 85%;
+    border-radius: 100vh;
+    border: none;
+}
+
+.btn-delete:hover{
+  color: #fff;
+  background: #40e0d0;
+}
+
+.event-link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.event-detail {
+    white-space: normal;
+    display: inline;
+    overflow-wrap : break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow-y: hidden;
+}
+
 .event-pannel{
     background-color: #dfc39d;
     display: inline-block;
-    height: 100pt;
+    height: 95pt;
     width: 100pt;
-    box-shadow: 5px -5px 5px 0px #00000011;
-    overflow-: hidden;
+    padding-left: 5px;
+    vertical-align: top;
 }
 
 .day-pannel{
     background-color: #3CBCC7;
     display: inline-block;
-    box-shadow: 5px -5px 5px 0px #00000011;
+    vertical-align: top;
 }
 
 .month-pannel{
     background-color: #1C96BA;
     display: inline-block;
-    box-shadow: 5px -5px 5px 0px #00000011;
+    vertical-align: top;
 }
 
 .year-pannel{
     background-color: #0C73B2;
     display: inline-block;
-    box-shadow: 5px -5px 5px 0px #00000011;
+    vertical-align: top;
+}
+
+#clonicle::-webkit-scrollbar{
+    display: none;
+}
+
+.event-form-button {
+    width: 50px;
+    height: 50px; 
+    position: absolute;
+    right: 0;
+    margin: 20px;
+}
+
+.event-form-button:hover .event-form-path{
+    fill:#40e0d0;
+}
+
+.message-logout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+
+}
+
+[class$="pannel"] {
+    margin-left: 15px;
+    box-shadow: -5px -5px 5px 0px #00000022;
 }

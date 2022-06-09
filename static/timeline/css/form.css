@@ -1,21 +1,31 @@
 /* モーダル */
 #event-form-content{
-	width:50%;
+	width:35%;
 	margin:1.5em auto 0;
 	padding:10px 20px;
 	border:2px solid #aaa;
-	background:#fff;
+	background-color:#EAE1C8;
 	z-index:2;
     display:none;
     position:fixed;
 }
 
-.event-form-p{
-	margin-top:1em;
+
+
+.btn-submit{
+	font-family: 'RocknRoll One', sans-serif;
+	color: #fff;
+	background-color: #00cccc;
+	font-size: 17px;
+	padding: 10px 20px;
+	margin-left: 80%;
+	border-radius: 100vh;
+	border: none;
 }
 
-.event-form-p:first-child{
-	margin-top:0;
+.btn-submit:hover{
+  color: #fff;
+  background: #40e0d0;
 }
 
 .button-link{

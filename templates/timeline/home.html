@@ -12,13 +12,16 @@
         <link rel="stylesheet" href='{% static "timeline/css/form.css" %}' />
         <link rel="stylesheet" href="{% static 'timeline/css/detail.css' %}"/>
         <link rel="stylesheet" href="{% static 'timeline/css/event.css' %}"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1><font color="red">{{ display_name }}</font>さんようこそ！！</h1>
+        <h1><font color="red">{{ display_name }}</font>さんの年表</h1>
 
    
 
-        <div id="clonicle" style="white-space: nowrap;overflow: auto;">
+        <div id="clonicle" style="white-space: nowrap;overflow-x: auto;">
             {% for event_list_y in event_list %}
                 <div class="year-pannel">
                 {% for event_list_m in event_list_y  %}
@@ -39,12 +42,12 @@
                                         <br>
                                     {% else %}
                                         <div class="event-pannel">
-                                            <p>
+                                            <p class="event-link">
                                                 <a id="detail-open-{{ event.pk }}" name="{{ event.pk }}" class="button-link">
                                                 {{ event.name }}
                                                 </a>
                                             </p>
-                                            <div style="display: inline;overflow-wrap : break-word;">
+                                            <div class="event-detail">
                                                 {{event.detail}}
                                             </div>
                                         </div>
@@ -54,9 +57,9 @@
                                             <p>{{event.detail}}</p>
                                             <form method="post" action="{% url 'delete' event.pk %}">
                                                 {% csrf_token %}
-                                                <button class="btn" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
+                                                <button class="btn-delete" type="submit" onclick='return confirm("本当に削除しますか？");'>削除</button>
                                             </form>
-                                            <p><a id="detail-close-{{ event.pk }}" class="button-link">閉じる</a></p>
+                                            <a id="detail-close-{{ event.pk }}" class="button-link">閉じる</a>
                                         </div>
                                     {% endif %}
                                 {% endfor %}
@@ -73,7 +76,10 @@
             </div>
         </div>
 
-        <p><a id="event-form-open" class="button-link">イベントを追加する</a></p>
+        <a id="event-form-open" class="event-form-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+            <path class="event-form-path" fill="#00cccc" d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM256 368C269.3 368 280 357.3 280 344V280H344C357.3 280 368 269.3 368 256C368 242.7 357.3 232 344 232H280V168C280 154.7 269.3 144 256 144C242.7 144 232 154.7 232 168V232H168C154.7 232 144 242.7 144 256C144 269.3 154.7 280 168 280H232V344C232 357.3 242.7 368 256 368z"/></svg>
+        </a>
 
         <div id="event-form-content">
             <p>名前、詳細、日付を入力してください。</p>
@@ -81,14 +87,14 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="hidden" name="submit_token" value="{{ submit_token }}" />
-                <button type="submit">送信</button>
+                <button class="btn-submit" type="submit">送信</button>
             </form>
-            <p><a id="event-form-close" class="button-link">閉じる</a></p>
+            <a id="event-form-close" class="button-link">閉じる</a>
         </div>
 
 
-        <p class="message"> ログアウトは
-            <a href="{% url 'Logout' %}">こちら</a>
+        <p class="message-logout"> 
+            <a href="{% url 'Logout' %}">ログアウト</a>
         </p>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

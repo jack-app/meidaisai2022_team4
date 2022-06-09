@@ -4,19 +4,15 @@ div[id^="detail-content"] {
 	margin:1.5em auto 0;
 	padding:10px 20px;
 	border:2px solid #aaa;
-	background:#fff;
+	background-color:#EAE1C8;
 	z-index:2;
     display:none;
     position:fixed;
+    white-space: normal;
+    overflow-y: hidden;
+	overflow-wrap : break-word;
 }
 
-/* .modal-p{
-	margin-top:1em;
-}
-
-.modal-p:first-child{
-	margin-top:0;
-} */
 
 
 #detail-overlay{

@@ -47,11 +47,11 @@ def get_events(UserID):
             month = event_list[i].date.month
             event_vector[j].append([])
             event_vector[j][k].append(month)
-            while(i < event_len and month == event_list[i].date.month):
+            while(i < event_len and year == event_list[i].date.year and month == event_list[i].date.month):
                 day = event_list[i].date.day
                 event_vector[j][k].append([])
                 event_vector[j][k][l].append(day)
-                while(i < event_len and day == event_list[i].date.day):
+                while(i < event_len and year == event_list[i].date.year and month == event_list[i].date.month and day == event_list[i].date.day):
                     event_vector[j][k][l].append(event_list[i])
                     i += 1
                 l += 1
