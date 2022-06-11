@@ -82,7 +82,7 @@
         </a>
 
         <div id="event-form-content">
-            <p>名前、詳細、日付を入力してください。</p>
+            <p>イベント名、詳細、日付を入力してください。</p>
             <form action="{% url 'home' %}" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}

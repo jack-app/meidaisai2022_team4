@@ -9,7 +9,7 @@ class EventPostForm(forms.ModelForm):
         model = Event
         fields = ('name', 'detail', "date", )
         labels={
-           'name':'名前',
+           'name':'イベント名',
            'detail':'詳細',
            'date':'日付',
            }
