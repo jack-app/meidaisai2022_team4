@@ -1,50 +1,68 @@
 /* メインページ */
+
+/* ttfファイルからフォントファミリーを作成 */
+@font-face {
+	font-family: 'MyFont';
+	src: url(../../font/hanazomefont/はなぞめフォント.ttf);
+}
+
+
 h1{
     text-align: center;
-  }
-  
-  div.reg{
-    background-color: #EEEEEE;
-    margin-left: 15%;
-    margin-right: 15%;
-  }
+}
 
-  .message{
-    text-align: right;
-    margin-right:20%;
-  }
-  
-  table.reg_form{
-    width: 100%;
-    border-spacing: 10px 20px;
-    padding-left:20px;
-  }
+div.reg{
+  background-color: #EEEEEE;
+  margin-left: 15%;
+  margin-right: 15%;
+  border-radius: 10px;
+}
 
-  .btn-account{
-      font-family: 'RocknRoll One', sans-serif;
-      color: #fff;
-      background-color: #00cccc;
-      font-size: 17px;
-      padding: 10px 20px;
-      margin-bottom: 10px;
-      margin-left: 80%;
-      border-radius: 100vh;
-      border: none;
-  }
-  
-  .btn-account:hover{
+.message{
+  text-align: right;
+  margin-right:20%;
+}
+
+table.reg_form{
+  width: 100%;
+  border-spacing: 10px 20px;
+  padding-left:20px;
+}
+
+.btn-account{
     color: #fff;
-    background: #40e0d0;
-  }
+    background-color: #00cccc;
+    font-size: 17px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    margin-left: 80%;
+    border-radius: 100vh;
+    border: none;
+}
 
-  .error_message {
-    color: #ff3300;
-    font-size: 18px;
-    padding: 10px 30px;
-  }
+.btn-account:hover{
+  color: #fff;
+  background: #40e0d0;
+}
 
-  body{
-    background-color: #EAE1C8;
-    font-family: 'RocknRoll One', sans-serif;
+.error_message {
+  color: #ff3300;
+  font-size: 18px;
+  padding: 10px 30px;
+}
 
-  }
+body{
+  background-color: #EAE1C8;
+  font-family: MyFont;
+
+}
+
+button, select{
+  font-family : MyFont;
+	font-size: 100%;
+}
+
+.logo {
+  text-align: center;
+}
+
