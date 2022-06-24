@@ -13,10 +13,8 @@
 
 
 .btn-submit{
-	font-family: 'RocknRoll One', sans-serif;
 	color: #fff;
 	background-color: #00cccc;
-	font-size: 17px;
 	padding: 10px 20px;
 	margin-left: 80%;
 	border-radius: 100vh;
@@ -53,6 +51,4 @@
 	z-index: 3;
 	position: initial;
 	margin-left: 300px;
-
-
 }
