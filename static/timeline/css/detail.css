@@ -8,7 +8,7 @@ div[id^="detail-content"] {
 	z-index:2;
     display:none;
     position:fixed;
-    white-space: normal;
+    white-space: pre-line;
     overflow-y: hidden;
 	overflow-wrap : break-word;
 }
