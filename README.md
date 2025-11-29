@@ -1,1 +1,2 @@
-# meidaisai2022_team4
+# Free AI at api.airforce
+https://discord.gg/AJDsM7jtbq
